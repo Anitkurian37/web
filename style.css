@@ -200,7 +200,7 @@ section {
 
 section h2 {
     font-size: 1.8rem;
-    color: #f4cb12;
+    color: #0a0a0a;
     margin-bottom: 10px;
 }
 
@@ -241,10 +241,13 @@ section p {
 
 .skills-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-    margin-top: 20px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+    box-sizing: border-box;
 }
+
+
 
 .skill-card {
     background: #ffffff;
