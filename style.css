@@ -1,7 +1,7 @@
 /* Reset default browser styles */
 * {
     margin: 0;
-    padding: 0;
+    padding: 20;
     box-sizing: border-box;
 }
 
@@ -21,7 +21,7 @@ header {
     background: gainsboro;
     border-radius: 12px;
     margin: 40px auto;
-    max-width: 900px;
+    max-width: 1000px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
@@ -31,7 +31,7 @@ header h1 {
 }
 
 header h1 span {
-    color: #4a97f7; /* cool blue highlight */
+    color: #1208c5; /* cool blue highlight */
 }
 
 header h3 {
@@ -46,7 +46,7 @@ header h3 {
     background: white;
     padding: 40px;
     margin: 0 auto;
-    border-radius: 12px;
+    border-radius: 50px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
@@ -58,7 +58,7 @@ header h3 {
 
 /* Navigation Bar */
 .navbar {
-    background: #ffffff;
+    background: #d80808;
     padding: 15px 0;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     position: sticky;
@@ -77,7 +77,7 @@ header h3 {
 .logo {
     font-size: 22px;
     font-weight: 700;
-    color: #3b82f6;
+    color: #000000;
 }
 
 .nav-links {
@@ -135,7 +135,7 @@ body {
 .logo {
     font-size: 1.4rem;
     font-weight: bold;
-    color: #4169E1;
+    color: #6d6e73;
 }
 
 .nav-links {
@@ -163,7 +163,7 @@ body {
 }
 
 #home {
-    padding-top: 120px;
+    padding-top: 40px;
     text-align: center;
     margin-bottom: 40px;
 }
@@ -186,7 +186,7 @@ header h3 {
 /* ===== Section Box Style ===== */
 section {
     width: 80%;
-    margin: -45px auto;
+    margin: 95px auto;
     background: white;
     padding: 30px;
     border-radius: 10px;
@@ -241,10 +241,13 @@ section p {
 
 .skills-container {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-    width: 100%;
-    box-sizing: border-box;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+/* Center the last card */
+.skills-container .skill-card:last-child {
+    grid-column: 2; /* Moves it to the middle column */
 }
 
 
@@ -272,6 +275,7 @@ section p {
 .skill-card p {
     font-size: 0.95rem;
     color: #555;
+    align-items: center;
 }
 
 /* ===== About Section ===== */
@@ -603,3 +607,66 @@ section p {
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4);
     letter-spacing: 0.5px;
 }
+
+/* Section wrapper */
+#skills-scroll {
+    padding: 60px 0;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    width: 80%;
+    margin: 40px auto;
+}
+
+#skills-scroll h2 {
+    text-align: center;
+    color: #000000;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+/* Outer container */
+.scroll-container {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+/* Sliding track */
+.scroll-track {
+    display: inline-flex;
+    align-items: center;
+    gap: 50px;
+    animation: scrollLeft 18s linear infinite;
+}
+
+/* Icons */
+.scroll-track img {
+    height: 110px;               /* Uniform height */
+    width: 240px;               /* Fixed width container */
+    object-fit: contain;        /* Keeps original proportions */
+    padding: 10px;              /* Makes spacing consistent */
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.scroll-track img:hover {
+    transform: scale(1.12);
+    opacity: 1;
+}
+
+
+/* Animation: Move right → left continuously */
+@keyframes scrollLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+
+
