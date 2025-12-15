@@ -162,6 +162,13 @@ body {
     background: url("bg.gif");
 }
 
+html, body {
+    height: 100%;
+}
+
+
+
+
 #home {
     padding-top: 40px;
     text-align: center;
@@ -241,24 +248,21 @@ section p {
 
 .skills-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
+    justify-items: center;
 }
-
-/* Center the last card */
-.skills-container .skill-card:last-child {
-    grid-column: 2; /* Moves it to the middle column */
-}
-
-
 
 .skill-card {
+    width: 100%;
+    max-width: 340px; /* lock visual width */
     background: #ffffff;
     padding: 22px;
     border-radius: 10px;
     border-left: 5px solid #4169E1;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: 0.3s ease;
+    min-height: 150px;
 }
 
 .skill-card:hover {
@@ -275,8 +279,8 @@ section p {
 .skill-card p {
     font-size: 0.95rem;
     color: #555;
-    align-items: center;
 }
+
 
 /* ===== About Section ===== */
 
@@ -607,6 +611,17 @@ section p {
     text-shadow: 0 1px 3px rgba(255, 255, 255, 0.4);
     letter-spacing: 0.5px;
 }
+
+.cert-card {
+    width: 100%;
+}
+
+@media (min-width: 900px) {
+    .cert-grid > .cert-card:nth-last-child(1):nth-child(odd) {
+        grid-column: 2;
+    }
+}
+
 
 /* Section wrapper */
 #skills-scroll {
