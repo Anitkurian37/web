@@ -278,24 +278,80 @@
 
 
 
-   <section id="contact" class="contact-section">
-    <div class="contact-glass-card">
-        <h2>Contact Me</h2>
-        <p>Feel free to reach out any time.</p>
+   <section id="contact-card">
+  <h2>Contact Me</h2>
 
-        <div class="contact-info">
-            <div class="icon">📧</div>
-            <a href="mailto:anitkurian37@gmail.com">anitkurian37@gmail.com</a>
-        </div>
-        <div class="contact-info">
-            <div class="icon"><img style="width: 30px;" src="imgs/linkedin.png" alt=""></div>
-            <a href="https://linkedin.com/in/anit-kurian-596ba9214" target="_blank">  linkedin.com</a>
-        </div>
-    </div>
+  <div class="contact-card-form">
+    <form id="contactForm">
+
+      <div class="form-group">
+        <label for="name">Name<span>*</span></label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="company">Company</label>
+        <input type="text" id="company" placeholder="Enter your company (optional)">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email<span>*</span></label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="mobile">Mobile Number<span>*</span></label>
+        <input type="tel" id="mobile" placeholder="Enter your mobile number" required>
+      </div>
+
+      <button type="submit">Submit</button>
+
+      <p id="successMessage" class="success-message">
+        Thanks for expressing your interest. I’ll get back to you soon.
+      </p>
+
+    </form>
+  </div>
 </section>
+
+<footer class="final-strip">
+    <div class="strip-container strip-left-only">
+
+        <!-- Action Buttons -->
+        <div class="strip-actions">
+
+            <!-- Download Resume -->
+            <a href="AnitKuirian_Resume_V1.pdf" download class="strip-btn">
+                Resume
+            </a>
+
+            <!-- Copy Email -->
+            <button class="strip-btn" onclick="copyEmail()">
+                Email
+            </button>
+
+            <!-- LinkedIn Redirect -->
+            <a href="https://www.linkedin.com/in/anit-kurian-596ba9214"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="strip-btn">
+                LinkedIn
+            </a>
+
+        </div>
+        <div class="footer-right">
+            © 2026 All rights reserved
+        </div>
+
+    </div>
+    
+</footer>
+
 
 
 
     <script src="script.js"></script>
+    <div id="toast" class="toast"></div>
+
 </body>
 </html>

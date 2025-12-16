@@ -236,7 +236,7 @@ section p {
 
 #skills {
     padding: 60px 10%;
-    background: #f5f7ff;
+    background: hsl(0, 0%, 100%);
     text-align: center;
 }
 
@@ -466,71 +466,75 @@ section p {
     100% { transform: scale(1); opacity: 0; }
 }
 
-.contact-section {
-    padding: 100px 20px;
-    display: flex;
-    justify-content: center;
-    background: linear-gradient(135deg, #0679a3 0%, #9479e3 100%);
-    min-height: 70vh;
+#contact-card {
+  width: 80%;
+  margin: 50px auto;
+  text-align: center;
 }
 
-.contact-glass-card {
-    width: 380px;
-    padding: 40px 35px;
-    border-radius: 20px;
-
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-
-    text-align: center;
-    color: #fff;
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+#contact-card h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #4169E1;
 }
 
-.contact-glass-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+.contact-card-form {
+  background: #e2e4ed;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  width: 50%;
+  align-self: center;
+  margin: 50px auto;
 }
 
-.contact-glass-card h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
 }
 
-.contact-glass-card p {
-    font-size: 1rem;
-    color: #e0e0e0;
-    margin-bottom: 25px;
+.form-group label {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+  font-weight: 600;
 }
 
-.contact-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
+.form-group label span {
+  color: #d00;
 }
 
-.contact-info .icon {
-    font-size: 1.8rem;
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.contact-info a {
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-decoration: none;
-    border-bottom: 2px solid transparent;
-    transition: 0.3s ease;
+button[type="submit"] {
+  background: #047113;
+  color: white;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
-.contact-info a:hover {
-    border-bottom: 2px solid #fff;
+button[type="submit"]:hover {
+  background: #2d4fa0;
 }
+
+.success-message {
+  display: none;
+  margin-top: 18px;
+  color: #0a7a0a;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
 
 /* certificate session */
 
@@ -682,6 +686,122 @@ section p {
         transform: translateX(-50%);
     }
 }
+
+/* Final Footer Strip */
+.final-strip {
+    width: 100%;
+    background-color: #1e0c84;
+    margin-top: 80px;
+}
+
+.strip-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+}
+
+/* Left corner alignment */
+.strip-left-only {
+    justify-content: flex-start;
+}
+
+/* Button group */
+.strip-actions {
+    display: flex;
+    gap: 14px;
+}
+
+/* Buttons */
+.strip-btn {
+    background: transparent;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+/* Hover effect */
+.strip-btn:hover {
+    background-color: #ffffff;
+    color: #433ddc;
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background-color: #1f7a1f; /* professional green */
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: all 0.35s ease;
+    z-index: 9999;
+}
+
+/* Visible state */
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+@media (max-width: 600px) {
+    .footer-layout {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .footer-right {
+        text-align: right;
+    }
+}
+
+.final-strip {
+    position: relative;
+    width: 100%;
+    background-color: #7121e1;
+}
+
+.strip-container {
+    position: relative;
+    width: 100%;
+    padding: 16px 24px;
+}
+
+/* Left buttons */
+.strip-actions {
+    display: flex;
+    gap: 14px;
+}
+
+/* FORCE right placement */
+.footer-right {
+    position: absolute;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #cccccc;
+    opacity: 0.85;
+    white-space: nowrap;
+}
+
+
 
 
 
