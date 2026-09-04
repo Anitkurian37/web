@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI &amp; AI Security — Build Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12151c;
+    --panel:#181d26;
+    --panel-2:#1e2430;
+    --line:#2b3242;
+    --text:#e8e6df;
+    --text-dim:#9099ac;
+    --text-faint:#5c6478;
+    --phase1:#5b9bb0;
+    --phase1-dim:#3e6a78;
+    --phase2:#c4622d;
+    --phase2-dim:#8a4620;
+    --good:#7fa66b;
+    --font-head:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.5;
+    padding-bottom:80px;
+  }
+  a{color:inherit;}
+
+  /* ---------- Top banner ---------- */
+  .hero{
+    padding:38px 24px 28px;
+    border-bottom:1px solid var(--line);
+    background:
+      linear-gradient(180deg, rgba(91,155,176,0.06), transparent 60%);
+  }
+  .hero-inner{max-width:900px; margin:0 auto;}
+  .hero-tag{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+    letter-spacing:0.04em;
+  }
+  .hero h1{
+    font-family:var(--font-head);
+    font-weight:600;
+    font-size:clamp(26px,4vw,38px);
+    margin-top:8px;
+    line-height:1.15;
+  }
+  .hero p.sub{
+    color:var(--text-dim);
+    max-width:60ch;
+    margin-top:10px;
+    font-size:15px;
+  }
+
+  /* ---------- Sticky stats bar ---------- */
+  .statbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(18,21,28,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+    padding:14px 24px;
+  }
+  .statbar-inner{
+    max-width:900px; margin:0 auto;
+    display:flex; flex-wrap:wrap; gap:22px; align-items:center;
+  }
+  .stat-block{min-width:150px; flex:1;}
+  .stat-block .label{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    text-transform:uppercase; letter-spacing:0.06em;
+  }
+  .stat-block .value{
+    font-family:var(--font-mono); font-size:18px; font-weight:600; margin-top:3px;
+  }
+  .stat-bar-track{
+    flex:2; min-width:180px;
+    height:8px; background:var(--panel-2); border:1px solid var(--line);
+    position:relative; overflow:hidden;
+  }
+  .stat-bar-fill{
+    height:100%; background:linear-gradient(90deg,var(--phase1),var(--good));
+    transition:width .4s ease;
+  }
+  .reset-btn{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    background:transparent; border:1px solid var(--line); padding:6px 10px;
+    cursor:pointer; letter-spacing:0.03em;
+  }
+  .reset-btn:hover{border-color:var(--phase2); color:var(--phase2);}
+
+  /* ---------- Phase sections ---------- */
+  .phase{max-width:900px; margin:0 auto; padding:40px 24px 10px;}
+  .phase-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:16px; flex-wrap:wrap;
+    border-bottom:2px solid var(--phase-color);
+    padding-bottom:14px; margin-bottom:22px;
+  }
+  .phase[data-phase="1"]{--phase-color:var(--phase1);}
+  .phase[data-phase="2"]{--phase-color:var(--phase2);}
+  .phase-head h2{
+    font-family:var(--font-head); font-weight:600; font-size:24px;
+    color:var(--phase-color);
+  }
+  .phase-head .phase-desc{color:var(--text-dim); font-size:13.5px; margin-top:4px; max-width:52ch;}
+  .phase-progress{
+    text-align:right; min-width:150px;
+  }
+  .phase-progress .pct{font-family:var(--font-mono); font-size:22px; font-weight:600; color:var(--phase-color);}
+  .phase-progress .days{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:2px;}
+  .phase-track{
+    height:6px; background:var(--panel-2); border:1px solid var(--line); margin-top:8px; overflow:hidden;
+  }
+  .phase-fill{height:100%; background:var(--phase-color); transition:width .4s ease;}
+
+  /* ---------- Module card ---------- */
+  .module{
+    border:1px solid var(--line);
+    border-left:3px solid var(--phase-color);
+    background:var(--panel);
+    margin-bottom:14px;
+  }
+  .module > summary{
+    list-style:none; cursor:pointer;
+    padding:16px 18px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  }
+  .module > summary::-webkit-details-marker{display:none;}
+  .mod-id{
+    font-family:var(--font-mono); font-size:11px; color:var(--phase-color);
+    border:1px solid var(--phase-color); padding:2px 6px; flex-shrink:0;
+  }
+  .mod-titles{flex:1 1 220px; min-width:0;}
+  .mod-titles .t{font-family:var(--font-head); font-weight:600; font-size:16px;}
+  .mod-titles .est{font-family:var(--font-mono); font-size:11px; color:var(--text-faint); margin-top:2px;}
+  .mod-mini-track{
+    width:110px; height:6px; background:var(--panel-2); border:1px solid var(--line); flex-shrink:0; overflow:hidden;
+  }
+  .mod-mini-fill{height:100%; background:var(--phase-color);}
+  .mod-mini-pct{font-family:var(--font-mono); font-size:12px; color:var(--text-dim); width:38px; text-align:right; flex-shrink:0;}
+  .mod-days{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    border-left:1px solid var(--line); padding-left:12px; flex-shrink:0; min-width:96px;
+  }
+  .caret{color:var(--text-faint); font-size:12px; transition:transform .2s; flex-shrink:0;}
+  .module[open] .caret{transform:rotate(90deg);}
+
+  .mod-body{padding:0 18px 20px; border-top:1px solid var(--line);}
+
+  /* content tabs */
+  .tabs{display:flex; gap:2px; margin:16px 0 0; border-bottom:1px solid var(--line);}
+  .tab-btn{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--text-dim);
+    background:transparent; border:none; padding:8px 12px; cursor:pointer;
+    border-bottom:2px solid transparent;
+  }
+  .tab-btn.active{color:var(--phase-color); border-bottom-color:var(--phase-color);}
+  .tab-pane{display:none; padding:14px 2px 4px; font-size:14px; color:var(--text);}
+  .tab-pane.active{display:block;}
+  .tab-pane ul{padding-left:18px;}
+  .tab-pane li{margin-bottom:5px;}
+  .tab-pane a{color:var(--phase-color); text-decoration:underline; text-underline-offset:2px;}
+
+  /* checklist */
+  .checklist{margin-top:18px;}
+  .checklist-head{
+    font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    text-transform:uppercase; letter-spacing:0.05em; margin-bottom:8px;
+  }
+  .item{
+    display:flex; align-items:flex-start; gap:10px;
+    padding:7px 0; border-bottom:1px dashed var(--line);
+    font-size:14.5px;
+  }
+  .item:last-child{border-bottom:none;}
+  .item input[type=checkbox]{
+    appearance:none; -webkit-appearance:none;
+    width:17px; height:17px; margin-top:2px; flex-shrink:0;
+    border:1px solid var(--text-faint); background:var(--panel-2);
+    cursor:pointer; position:relative;
+  }
+  .item input[type=checkbox]:checked{
+    background:var(--phase-color); border-color:var(--phase-color);
+  }
+  .item input[type=checkbox]:checked::after{
+    content:"✓"; position:absolute; top:-3px; left:2px; font-size:13px; color:var(--ink); font-weight:700;
+  }
+  .item label{cursor:pointer;}
+  .item.done label{color:var(--text-dim); text-decoration:line-through; text-decoration-color:var(--text-faint);}
+
+  /* day tracking row */
+  .daybox{
+    margin-top:18px; padding:12px 14px; background:var(--panel-2); border:1px solid var(--line);
+    display:flex; gap:22px; flex-wrap:wrap; align-items:flex-end;
+  }
+  .daybox .field{display:flex; flex-direction:column; gap:4px;}
+  .daybox label{font-family:var(--font-mono); font-size:10.5px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.04em;}
+  .daybox input[type=date]{
+    background:var(--panel); border:1px solid var(--line); color:var(--text);
+    font-family:var(--font-mono); font-size:12.5px; padding:5px 7px;
+  }
+  .daybox .readout{font-family:var(--font-mono); font-size:12.5px;}
+  .daybox .readout .n{color:var(--phase-color); font-weight:600; font-size:16px;}
+  .mod-reset{
+    margin-left:auto; font-family:var(--font-mono); font-size:11px; color:var(--text-faint);
+    background:transparent; border:1px solid var(--line); padding:6px 10px; cursor:pointer;
+  }
+  .mod-reset:hover{border-color:var(--phase2); color:var(--phase2);}
+
+  footer{max-width:900px; margin:40px auto 0; padding:0 24px; color:var(--text-faint); font-size:12px;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">SELF-PACED ROADMAP · PRACTICAL TRACK</div>
+    <h1>AI, then AI Security</h1>
+    <p class="sub">Twelve modules, two phases. Phase 1 builds a working understanding of AI by shipping a real system. Phase 2 turns that understanding into offensive and defensive AI security skill. Check items off as you finish them — dates and progress save automatically in this browser.</p>
+  </div>
+</div>
+
+<div class="statbar">
+  <div class="statbar-inner">
+    <div class="stat-block">
+      <div class="label">Overall progress</div>
+      <div class="value" id="overall-pct">0%</div>
+    </div>
+    <div class="stat-bar-track"><div class="stat-bar-fill" id="overall-fill" style="width:0%"></div></div>
+    <div class="stat-block">
+      <div class="label">Days elapsed</div>
+      <div class="value" id="overall-days">—</div>
+    </div>
+    <button class="reset-btn" id="reset-all">Reset all progress</button>
+  </div>
+</div>
+
+<div class="phase" data-phase="1" id="phase-1">
+  <div class="phase-head">
+    <div>
+      <h2>Phase 1 — Master AI</h2>
+      <div class="phase-desc">Just enough math, ML, deep learning and LLM theory to be dangerous — then a capstone build so you actually understand how the pieces move.</div>
+    </div>
+    <div class="phase-progress">
+      <div class="pct" id="p1-pct">0%</div>
+      <div class="days" id="p1-days">not started</div>
+      <div class="phase-track"><div class="phase-fill" id="p1-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="p1-modules"></div>
+</div>
+
+<div class="phase" data-phase="2" id="phase-2">
+  <div class="phase-head">
+    <div>
+      <h2>Phase 2 — AI Security</h2>
+      <div class="phase-desc">Attack surface, vulnerability classes, threat modeling, hands-on pen testing, defenses, and how to build a real track record.</div>
+    </div>
+    <div class="phase-progress">
+      <div class="pct" id="p2-pct">0%</div>
+      <div class="days" id="p2-days">not started</div>
+      <div class="phase-track"><div class="phase-fill" id="p2-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="p2-modules"></div>
+</div>
+
+<footer>Progress is stored privately for this browser via the artifact's storage API. Estimated day ranges are a practical pace guide, not a deadline — your tracked "days taken" is what actually counts.</footer>
+
+<script>
+const MODULES = [
+{id:"p1m1", phase:1, num:"M01", title:"Python & Math Essentials", est:"2–4 days",
+ items:[
+  "Python refresher: functions, OOP, file I/O, virtual environments",
+  "NumPy & Pandas for data manipulation",
+  "Linear algebra intuition: vectors, matrices, dot product",
+  "Probability & statistics basics: distributions, mean/variance, Bayes' rule",
+  "Calculus intuition: derivatives and gradients (concept, not proofs)"
+ ],
+ what:"Just enough math to understand *why* ML algorithms work, not enough to derive them from scratch. Intuition over rigor.",
+ how:"Skip textbook-first learning. Code first, build intuition with visuals, come back to math only when a concept blocks you.",
+ where:["Kaggle Learn (Python, Pandas)","3Blue1Brown YouTube — Essence of Linear Algebra & Calculus","Khan Academy — Statistics & Probability"],
+ refs:[["3Blue1Brown","https://www.3blue1brown.com/"],["Kaggle Learn","https://www.kaggle.com/learn"],["Khan Academy Statistics","https://www.khanacademy.org/math/statistics-probability"]]
+},
+{id:"p1m2", phase:1, num:"M02", title:"Core Machine Learning Concepts", est:"3–5 days",
+ items:[
+  "Supervised vs unsupervised vs reinforcement learning",
+  "Train/test/validation split & cross-validation",
+  "Overfitting vs underfitting, bias-variance tradeoff",
+  "Loss functions & gradient descent",
+  "Classic algorithms: linear/logistic regression, decision trees, kNN, SVM",
+  "Evaluation metrics: accuracy, precision/recall, F1, ROC-AUC"
+ ],
+ what:"How models actually learn patterns from data, and how you know if they've learned something real vs memorized noise.",
+ how:"Implement 2–3 algorithms from scratch in NumPy first, then re-do them with scikit-learn on a real Kaggle dataset.",
+ where:["Andrew Ng — Machine Learning Specialization (Coursera)","scikit-learn documentation","StatQuest YouTube for intuitive explanations"],
+ refs:[["Andrew Ng ML Specialization","https://www.coursera.org/specializations/machine-learning-introduction"],["scikit-learn docs","https://scikit-learn.org/stable/"],["StatQuest","https://www.youtube.com/@statquest"]]
+},
+{id:"p1m3", phase:1, num:"M03", title:"Deep Learning & Neural Networks", est:"4–6 days",
+ items:[
+  "Perceptron, multi-layer networks, activation functions",
+  "Backpropagation & optimizers (SGD, Adam)",
+  "CNN basics for vision",
+  "RNN/LSTM basics for sequences",
+  "PyTorch fundamentals: tensors, autograd, training loop"
+ ],
+ what:"How neural networks learn layered representations, and how to actually train one in code end to end.",
+ how:"Build a tiny NN from scratch in NumPy to demystify backprop, then rebuild it in PyTorch on MNIST or CIFAR-10.",
+ where:["fast.ai — Practical Deep Learning for Coders","Official PyTorch tutorials","DeepLearning.AI Deep Learning Specialization"],
+ refs:[["fast.ai course","https://course.fast.ai/"],["PyTorch tutorials","https://pytorch.org/tutorials/"],["DeepLearning.AI","https://www.deeplearning.ai/"]]
+},
+{id:"p1m4", phase:1, num:"M04", title:"Transformers & LLMs", est:"4–6 days",
+ items:[
+  "Attention mechanism & self-attention intuition",
+  "Transformer architecture: encoder/decoder blocks",
+  "Tokenization & embeddings",
+  "Pretraining vs fine-tuning vs instruction tuning vs RLHF (concept level)",
+  "Inference parameters: temperature, top-p, context window",
+  "Open-source vs closed-source model landscape"
+ ],
+ what:"How models like GPT, Claude and Llama actually process and generate text under the hood.",
+ how:"Read a visual walkthrough of the architecture first, then follow along building a minimal GPT from scratch to see every piece run.",
+ where:["Jay Alammar — The Illustrated Transformer","Andrej Karpathy — 'Let's build GPT' (video + nanoGPT repo)","Hugging Face NLP Course"],
+ refs:[["The Illustrated Transformer","http://jalammar.github.io/illustrated-transformer/"],["Karpathy: Let's build GPT","https://www.youtube.com/watch?v=kCc8FmEb1nY"],["Hugging Face NLP Course","https://huggingface.co/learn/nlp-course"]]
+},
+{id:"p1m5", phase:1, num:"M05", title:"Practical AI Engineering", est:"4–6 days",
+ items:[
+  "Using LLM APIs effectively (Anthropic, OpenAI, etc.)",
+  "Prompt engineering techniques",
+  "Retrieval-Augmented Generation (RAG): embeddings & vector databases",
+  "Fine-tuning basics: LoRA/QLoRA, and when to fine-tune vs just prompt",
+  "AI agents: tool/function calling, orchestration",
+  "Evaluating LLM-app quality"
+ ],
+ what:"How to build real applications on top of foundation models instead of just calling an API in isolation.",
+ how:"Build incrementally: plain chatbot → add RAG over your own docs → add a tool-calling agent. Ship each stage before adding the next.",
+ where:["Anthropic & OpenAI cookbook repos","LangChain / LlamaIndex documentation","DeepLearning.AI short courses"],
+ refs:[["Anthropic prompt engineering guide","https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview"],["LangChain docs","https://python.langchain.com/"],["LlamaIndex docs","https://docs.llamaindex.ai/"]]
+},
+{id:"p1m6", phase:1, num:"M06", title:"Capstone — Build a Working AI System", est:"5–7 days",
+ items:[
+  "Pick one real, scoped task to solve end to end",
+  "Build the data pipeline (collection / cleaning)",
+  "Build or select the model (train it, or use a pretrained/LLM backbone)",
+  "Build inference pipeline + minimal interface (CLI or web)",
+  "Evaluate results and iterate at least once",
+  "Write up the full architecture: input → processing → model → output"
+ ],
+ what:"Consolidate everything by shipping one complete system — e.g. a RAG Q&A bot over your own documents, a fine-tuned classifier, or a small task-performing agent.",
+ how:"Scope small on purpose. The goal is tracing the full data flow yourself, not building something impressive — ship in under a week.",
+ where:["Gradio / Streamlit for a fast interface","Hugging Face Spaces for free deployment","GitHub for similar reference project templates"],
+ refs:[["Gradio docs","https://www.gradio.app/docs"],["Streamlit docs","https://docs.streamlit.io/"],["Hugging Face Spaces","https://huggingface.co/spaces"]]
+},
+{id:"p2m1", phase:2, num:"M07", title:"AI Security Foundations", est:"2–3 days",
+ items:[
+  "Map the AI attack surface: data, model, training pipeline, inference API, agents/tools, supply chain",
+  "Read the OWASP Top 10 for LLM Applications end to end",
+  "Get an overview of the MITRE ATLAS framework",
+  "Understand how AI/ML security differs from traditional AppSec",
+  "Learn core vocabulary: adversarial ML, red teaming, guardrails, alignment"
+ ],
+ what:"A mental model of where and how AI systems get attacked, before diving into individual vulnerability classes.",
+ how:"Read the OWASP LLM Top 10 fully, then browse MITRE ATLAS's matrix and a couple of its real-world case studies.",
+ where:["OWASP Top 10 for LLM Applications","MITRE ATLAS","NIST AI Risk Management Framework"],
+ refs:[["OWASP LLM Top 10","https://owasp.org/www-project-top-10-for-large-language-model-applications/"],["MITRE ATLAS","https://atlas.mitre.org/"],["NIST AI RMF","https://www.nist.gov/itl/ai-risk-management-framework"]]
+},
+{id:"p2m2", phase:2, num:"M08", title:"Attack Types & Vulnerabilities", est:"5–7 days",
+ items:[
+  "Prompt injection — direct and indirect",
+  "Jailbreaking techniques",
+  "Data poisoning & backdoor attacks",
+  "Model extraction / model stealing",
+  "Adversarial examples (evasion attacks)",
+  "Membership inference & model inversion (privacy attacks)",
+  "Training data extraction / memorization",
+  "Insecure output handling (e.g. XSS/SSRF triggered via LLM output)",
+  "Excessive agency in over-permissioned agents/tools",
+  "Supply chain attacks: malicious model files, unsafe deserialization, poisoned datasets/plugins",
+  "Denial of service: resource exhaustion, token flooding"
+ ],
+ what:"A deep-dive on each vulnerability class — what it is, how it's actually exploited, and real-world examples.",
+ how:"Read one paper or writeup per attack type, then reproduce a simple version yourself against a local/demo LLM.",
+ where:["Simon Willison's blog (prompt injection tag)","Kai Greshake's indirect prompt injection research","Lakera AI blog","arXiv (cs.CR / cs.LG adversarial ML papers)"],
+ refs:[["Simon Willison — prompt injection","https://simonwillison.net/series/prompt-injection/"],["\"Not what you've signed up for\" (indirect prompt injection)","https://arxiv.org/abs/2302.12173"],["Lakera LLM Vulnerability Guide","https://www.lakera.ai/blog"]]
+},
+{id:"p2m3", phase:2, num:"M09", title:"AI Threat Modeling", est:"3–4 days",
+ items:[
+  "Draw data flow diagrams for an AI/LLM system",
+  "Identify trust boundaries: user input, retrieved data, tool output, training data",
+  "Apply STRIDE to an AI pipeline",
+  "Map identified threats to MITRE ATLAS tactics/techniques",
+  "Score and prioritize risks",
+  "Produce a written threat model for one sample AI app"
+ ],
+ what:"How to systematically predict what can go wrong in a given AI system before you build it or attack it.",
+ how:"Take your Phase 1 capstone project and produce a complete threat model for it — this is your first real deliverable.",
+ where:["MITRE ATLAS Navigator","Microsoft's Threat Modeling AI/ML Systems guidance","OWASP AI Exchange"],
+ refs:[["MITRE ATLAS Navigator","https://atlas.mitre.org/matrices/ATLAS"],["Microsoft Threat Modeling AI/ML","https://learn.microsoft.com/en-us/security/engineering/threat-modeling-aiml"],["OWASP AI Exchange","https://owaspai.org/"]]
+},
+{id:"p2m4", phase:2, num:"M10", title:"AI Pen Testing & Red Teaming", est:"6–8 days",
+ items:[
+  "Set up a safe test environment (local open-source LLM or sandboxed API app)",
+  "Manual red teaming: craft prompt injections and jailbreaks by hand",
+  "Automated tooling: garak, PyRIT, promptfoo",
+  "Test a RAG pipeline for data leakage",
+  "Test an agent/tool-use system for excessive-agency abuse",
+  "Write a professional pentest report for an AI finding"
+ ],
+ what:"Hands-on offensive practice against real or deliberately-vulnerable AI systems — this is where theory becomes skill.",
+ how:"Install garak or PyRIT, scan a local open-source model, then attack a deliberately vulnerable LLM demo app end to end.",
+ where:["NVIDIA garak (GitHub)","Microsoft PyRIT (GitHub)","promptfoo.dev","\"Damn Vulnerable LLM Agent\"-style practice repos"],
+ refs:[["garak","https://github.com/NVIDIA/garak"],["PyRIT","https://github.com/Azure/PyRIT"],["promptfoo","https://www.promptfoo.dev/"]]
+},
+{id:"p2m5", phase:2, num:"M11", title:"Defense & Secure AI Development", est:"4–5 days",
+ items:[
+  "Input/output validation & sanitization for LLM apps",
+  "Guardrail frameworks: NeMo Guardrails, Llama Guard, Rebuff",
+  "Principle of least privilege for agent tool access",
+  "Rate limiting, anomaly detection, monitoring/logging for AI systems",
+  "Secure MLOps: model provenance, dependency scanning, safe serialization (avoid raw pickle)",
+  "Human-in-the-loop controls for high-risk actions"
+ ],
+ what:"How to actually fix and prevent the vulnerabilities found in the previous two modules.",
+ how:"Take the vulnerable app from Module 10 and harden it step by step — re-attack after each fix to verify it actually holds.",
+ where:["NVIDIA NeMo Guardrails docs","Meta Llama Guard model card","OWASP AI Security & Privacy Guide"],
+ refs:[["NeMo Guardrails","https://github.com/NVIDIA/NeMo-Guardrails"],["Llama Guard","https://huggingface.co/meta-llama/LlamaGuard-7b"],["OWASP AI Exchange — mitigations","https://owaspai.org/goto/mitigations/"]]
+},
+{id:"p2m6", phase:2, num:"M12", title:"Gain Real Experience", est:"7–10 days to start, ongoing after",
+ items:[
+  "Complete Gandalf (Lakera) prompt injection levels",
+  "Complete HackAPrompt challenges",
+  "Try Dreadnode Crucible AI CTF challenges",
+  "Find and review an AI/LLM bug bounty program (e.g. via Huntr)",
+  "Publish one public 'attack + defense' writeup as a portfolio piece",
+  "Follow AI security researchers and join a community"
+ ],
+ what:"Convert everything you've learned into practical, provable experience — and a track record other people can see.",
+ how:"Do one challenge a day and write a short public writeup of what you learned each time; this becomes your portfolio.",
+ where:["gandalf.lakera.ai","hackaprompt.com","crucible.dreadnode.io","huntr.com","AI Village (DEF CON) resources"],
+ refs:[["Gandalf","https://gandalf.lakera.ai/"],["HackAPrompt","https://www.hackaprompt.com/"],["Crucible","https://crucible.dreadnode.io/"],["Huntr","https://huntr.com/"]]
+}
+];
+
+const STORAGE_KEY = "ai-roadmap-state-v1";
+let STATE = { checked:{}, dates:{} }; // dates[modId] = {start:"yyyy-mm-dd", end:"yyyy-mm-dd"}
+let storageReady = false;
+
+function todayStr(){ return new Date().toISOString().slice(0,10); }
+function diffDaysInclusive(a,b){
+  const d1 = new Date(a+"T00:00:00"), d2 = new Date(b+"T00:00:00");
+  return Math.round((d2-d1)/86400000) + 1;
+}
+
+async function loadState(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, false);
+    if(res && res.value){
+      const parsed = JSON.parse(res.value);
+      STATE.checked = parsed.checked || {};
+      STATE.dates = parsed.dates || {};
+    }
+  }catch(e){ /* no saved state yet */ }
+  storageReady = true;
+}
+
+async function saveState(){
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify(STATE), false);
+  }catch(e){ console.error("Could not save progress:", e); }
+}
+
+function itemKey(modId, idx){ return modId + "::" + idx; }
+
+function updateModuleDates(mod){
+  const total = mod.items.length;
+  let doneCount = 0;
+  for(let i=0;i<total;i++){ if(STATE.checked[itemKey(mod.id,i)]) doneCount++; }
+  let dr = STATE.dates[mod.id] || {};
+  if(doneCount > 0 && !dr.start){ dr.start = todayStr(); }
+  if(doneCount === total && total > 0){
+    if(!dr.end) dr.end = todayStr();
+  } else {
+    dr.end = null;
+  }
+  if(doneCount === 0){ dr.start = null; dr.end = null; }
+  STATE.dates[mod.id] = dr;
+}
+
+function moduleStats(mod){
+  const total = mod.items.length;
+  let doneCount = 0;
+  for(let i=0;i<total;i++){ if(STATE.checked[itemKey(mod.id,i)]) doneCount++; }
+  const pct = total ? Math.round((doneCount/total)*100) : 0;
+  const dr = STATE.dates[mod.id] || {};
+  let daysLabel = "not started";
+  if(dr.start && dr.end){
+    const n = diffDaysInclusive(dr.start, dr.end);
+    daysLabel = n + (n===1 ? " day" : " days") + " · done";
+  } else if(dr.start){
+    const n = diffDaysInclusive(dr.start, todayStr());
+    daysLabel = n + (n===1 ? " day" : " days") + " · in progress";
+  }
+  return {total, doneCount, pct, dr, daysLabel};
+}
+
+function phaseStats(phaseNum){
+  const mods = MODULES.filter(m=>m.phase===phaseNum);
+  let totalItems=0, doneItems=0;
+  let earliestStart=null, latestEnd=null, anyOpen=false;
+  mods.forEach(m=>{
+    const s = moduleStats(m);
+    totalItems += s.total; doneItems += s.doneCount;
+    if(s.dr.start){
+      if(!earliestStart || s.dr.start < earliestStart) earliestStart = s.dr.start;
+      if(s.dr.end){ if(!latestEnd || s.dr.end > latestEnd) latestEnd = s.dr.end; }
+      else { anyOpen = true; }
+    }
+  });
+  const pct = totalItems ? Math.round((doneItems/totalItems)*100) : 0;
+  let daysLabel = "not started";
+  if(earliestStart){
+    const endPoint = anyOpen ? todayStr() : (latestEnd || todayStr());
+    const n = diffDaysInclusive(earliestStart, endPoint);
+    daysLabel = n + (n===1?" day":" days") + (pct===100 ? " · done" : " · in progress");
+  }
+  return {pct, daysLabel};
+}
+
+function overallStats(){
+  let totalItems=0, doneItems=0, earliestStart=null, latestEnd=null, anyOpen=false;
+  MODULES.forEach(m=>{
+    const s = moduleStats(m);
+    totalItems += s.total; doneItems += s.doneCount;
+    if(s.dr.start){
+      if(!earliestStart || s.dr.start < earliestStart) earliestStart = s.dr.start;
+      if(s.dr.end){ if(!latestEnd || s.dr.end > latestEnd) latestEnd = s.dr.end; }
+      else { anyOpen = true; }
+    }
+  });
+  const pct = totalItems ? Math.round((doneItems/totalItems)*100) : 0;
+  let daysLabel = "—";
+  if(earliestStart){
+    const endPoint = anyOpen ? todayStr() : (latestEnd || todayStr());
+    daysLabel = diffDaysInclusive(earliestStart, endPoint) + (pct===100?" (complete)":" (in progress)");
+  }
+  return {pct, daysLabel};
+}
+
+function renderModule(mod){
+  const wrap = document.createElement("details");
+  wrap.className = "module";
+  wrap.id = "mod-" + mod.id;
+
+  const summary = document.createElement("summary");
+  summary.innerHTML = `
+    <span class="mod-id">${mod.num}</span>
+    <span class="mod-titles">
+      <div class="t">${mod.title}</div>
+      <div class="est">Suggested pace: ${mod.est}</div>
+    </span>
+    <span class="mod-mini-track"><span class="mod-mini-fill" style="width:0%"></span></span>
+    <span class="mod-mini-pct">0%</span>
+    <span class="mod-days">not started</span>
+    <span class="caret">▶</span>
+  `;
+  wrap.appendChild(summary);
+
+  const body = document.createElement("div");
+  body.className = "mod-body";
+
+  const whereList = mod.where.map(w=>`<li>${w}</li>`).join("");
+  const refsList = mod.refs.map(r=>`<li><a href="${r[1]}" target="_blank" rel="noopener">${r[0]}</a></li>`).join("");
+
+  body.innerHTML = `
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="what">What to learn</button>
+      <button class="tab-btn" data-tab="how">How to learn it</button>
+      <button class="tab-btn" data-tab="where">Where to learn</button>
+      <button class="tab-btn" data-tab="refs">References</button>
+    </div>
+    <div class="tab-pane active" data-pane="what"><p>${mod.what}</p></div>
+    <div class="tab-pane" data-pane="how"><p>${mod.how}</p></div>
+    <div class="tab-pane" data-pane="where"><ul>${whereList}</ul></div>
+    <div class="tab-pane" data-pane="refs"><ul>${refsList}</ul></div>
+
+    <div class="checklist">
+      <div class="checklist-head">Checklist (${mod.items.length} items)</div>
+      <div class="items"></div>
+    </div>
+
+    <div class="daybox">
+      <div class="field">
+        <label>Start date</label>
+        <input type="date" class="start-input" />
+      </div>
+      <div class="field">
+        <label>Completion date</label>
+        <input type="date" class="end-input" />
+      </div>
+      <div class="field">
+        <label>Days taken</label>
+        <div class="readout"><span class="n days-n">—</span></div>
+      </div>
+      <button class="mod-reset">Reset module</button>
+    </div>
+  `;
+  wrap.appendChild(body);
+
+  const itemsContainer = body.querySelector(".items");
+  mod.items.forEach((text, idx)=>{
+    const key = itemKey(mod.id, idx);
+    const row = document.createElement("div");
+    row.className = "item";
+    const inputId = "chk-" + key.replace("::","-");
+    row.innerHTML = `<input type="checkbox" id="${inputId}"><label for="${inputId}">${text}</label>`;
+    const cb = row.querySelector("input");
+    cb.checked = !!STATE.checked[key];
+    if(cb.checked) row.classList.add("done");
+    cb.addEventListener("change", ()=>{
+      STATE.checked[key] = cb.checked;
+      row.classList.toggle("done", cb.checked);
+      updateModuleDates(mod);
+      syncModuleUI(mod, wrap);
+      renderAllSummaries();
+      saveState();
+    });
+    itemsContainer.appendChild(row);
+  });
+
+  // tabs
+  body.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      body.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+      body.querySelectorAll(".tab-pane").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      body.querySelector(`.tab-pane[data-pane="${btn.dataset.tab}"]`).classList.add("active");
+    });
+  });
+
+  // manual date overrides
+  const startInput = body.querySelector(".start-input");
+  const endInput = body.querySelector(".end-input");
+  startInput.addEventListener("change", ()=>{
+    const dr = STATE.dates[mod.id] || {};
+    dr.start = startInput.value || null;
+    STATE.dates[mod.id] = dr;
+    syncModuleUI(mod, wrap);
+    renderAllSummaries();
+    saveState();
+  });
+  endInput.addEventListener("change", ()=>{
+    const dr = STATE.dates[mod.id] || {};
+    dr.end = endInput.value || null;
+    STATE.dates[mod.id] = dr;
+    syncModuleUI(mod, wrap);
+    renderAllSummaries();
+    saveState();
+  });
+
+  // reset module
+  body.querySelector(".mod-reset").addEventListener("click", ()=>{
+    if(!confirm(`Reset all progress for ${mod.num} — ${mod.title}?`)) return;
+    mod.items.forEach((_,idx)=>{ delete STATE.checked[itemKey(mod.id, idx)]; });
+    STATE.dates[mod.id] = {start:null, end:null};
+    itemsContainer.querySelectorAll("input[type=checkbox]").forEach(cb=>{
+      cb.checked = false;
+      cb.closest(".item").classList.remove("done");
+    });
+    syncModuleUI(mod, wrap);
+    renderAllSummaries();
+    saveState();
+  });
+
+  syncModuleUI(mod, wrap);
+  return wrap;
+}
+
+function syncModuleUI(mod, wrapEl){
+  const s = moduleStats(mod);
+  const summary = wrapEl.querySelector("summary");
+  summary.querySelector(".mod-mini-fill").style.width = s.pct + "%";
+  summary.querySelector(".mod-mini-pct").textContent = s.pct + "%";
+  summary.querySelector(".mod-days").textContent = s.daysLabel;
+
+  const body = wrapEl.querySelector(".mod-body");
+  body.querySelector(".start-input").value = s.dr.start || "";
+  body.querySelector(".end-input").value = s.dr.end || "";
+  const daysN = body.querySelector(".days-n");
+  if(s.dr.start && s.dr.end){
+    daysN.textContent = diffDaysInclusive(s.dr.start, s.dr.end);
+  } else if(s.dr.start){
+    daysN.textContent = diffDaysInclusive(s.dr.start, todayStr()) + " (so far)";
+  } else {
+    daysN.textContent = "—";
+  }
+}
+
+function renderAllSummaries(){
+  // phase 1
+  const s1 = phaseStats(1);
+  document.getElementById("p1-pct").textContent = s1.pct + "%";
+  document.getElementById("p1-fill").style.width = s1.pct + "%";
+  document.getElementById("p1-days").textContent = s1.daysLabel;
+  // phase 2
+  const s2 = phaseStats(2);
+  document.getElementById("p2-pct").textContent = s2.pct + "%";
+  document.getElementById("p2-fill").style.width = s2.pct + "%";
+  document.getElementById("p2-days").textContent = s2.daysLabel;
+  // overall
+  const so = overallStats();
+  document.getElementById("overall-pct").textContent = so.pct + "%";
+  document.getElementById("overall-fill").style.width = so.pct + "%";
+  document.getElementById("overall-days").textContent = so.daysLabel;
+}
+
+async function init(){
+  await loadState();
+  const p1Container = document.getElementById("p1-modules");
+  const p2Container = document.getElementById("p2-modules");
+  MODULES.forEach(mod=>{
+    const el = renderModule(mod);
+    (mod.phase===1 ? p1Container : p2Container).appendChild(el);
+  });
+  renderAllSummaries();
+
+  document.getElementById("reset-all").addEventListener("click", async ()=>{
+    if(!confirm("Reset ALL progress across every module? This cannot be undone.")) return;
+    STATE = {checked:{}, dates:{}};
+    await saveState();
+    location.reload();
+  });
+}
+
+init();
+</script>
+</body>
+</html>
